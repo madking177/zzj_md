@@ -32,7 +32,21 @@ frida监控某个函数访问了某块内存 process-setExceptionHandler（callb
 比如hook dlopen函数，在onleave函数执行set_read_write_break函数，设置异常回调，然后内存权限改为---
 发生异常后触发回调函数
 callback接受一个对象，记录异常消息，异常类型，异常地址，以及寄存器信息。
-memo-protect修改的是内存页权限，因此会不准确，最佳推荐unidbg
-
+memo-protect修改的是内存页权限，因此会不准确，最佳推荐unidbg	
 ```
+
+## Frida-tools使用
+
+```shell
+frida-trace -U -i 'Java*'  -f com.chaoxing.mobile
+
+匹配函数
+
+
+frida相关
+frida             frida-compile     frida-dexdump     frida-itrace      frida-kill        frida-ls-devices  frida-pull        frida-rm
+frida-apk         frida-create      frida-discover    frida-join        frida-ls          frida-ps          frida-push        frida-trace
+```
+
+
 
