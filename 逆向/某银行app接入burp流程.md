@@ -22,7 +22,9 @@ chmod -R 777 fs14
 ./fs14 
 # 如果必要切换端口号
 
-./fs14 -l 0.0.0.0 9999 #(xxx?或者其他)
+#./fs14 -l 0.0.0.0 9999 #(xxx?或者其他)
+# 初次不需要指定端口
+# 直接./fs14就行
 
 
 # 客户端安装froda
@@ -34,7 +36,9 @@ frida-ps -U
 
 ```
 
-#  安装某app
+
+
+# 安装某app
 
 ```shell
 adb install xxx.apk
@@ -44,7 +48,9 @@ adb shell dumpsys window windows | grep mCurrentFocus
 
 ```
 
-## 定位frida反调试的位置
+
+
+# 定位frida 反调试位置
 
 不需要操作，数值已经计算，如果更换版本需要重新计算地址
 
@@ -117,11 +123,53 @@ hook_pthread();
 
 ```
 
-将上面代码复制到js文件
+将上面代码复制到js文件稍后用到
 
-## 启动frida 反调试脚本
+# frida接入burp工作原理
 
-frida -U -f com.yitong.mbank.xy -l frida-bypass.js --no-pause
+
+
+![image-20240506102824058](img/assets/image-20240506102824058.png)
+
+
+
+## 准备工作
+
+启动转发服务 如图3 到4得节点
+
+python api.py 8010
+
+启动burp
+
+略
+
+启动frida 反调试
+
+frida -U -f com.yitong.mbank.xy -l fuck-anti-frida.js --no-puase
+
+启动抓包工具
+
+python r0capture-v2.py
+
+app正常运行即可
+
+
+
+# 四个hook点流程
+
+有价值得hook点 
+
+?type=jiami
+
+?type=jiemi
+
+（此处解释冗余可忽略）加密---多次写入缓冲区后发送-----接收网络数据多次读缓冲区-----解密，hook缓冲区多次读写 得意思是发送，接收数据会多次触发hook点得代码
+
+
+
+![image-20240506104049271](img/assets/image-20240506104049271.png)
+
+
 
 
 
@@ -129,20 +177,11 @@ frida -U -f com.yitong.mbank.xy -l frida-bypass.js --no-pause
 
 # r0capture 绕过证书进行抓包转发burp 
 
-开启burp 端口8003
+burp代理8011端口
 
 ```js
 启动抓包脚本 具体见附件代码
 
-python r0capture.py -U com.yitong.mbank.xy -v -p net.pcap
+python r0capture-v2.py
 
 ```
-
-![image-20240429132553476](./img/assets/image-20240429132553476.png)
-
-补充
-
-因为hook的比较底层 有时候burp转发多次数据后 app才会发送一部分请求
-
-加密算法刚还原了二代壳代码 时间因素还没支持，可以先把流程打通
-
