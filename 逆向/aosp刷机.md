@@ -1,6 +1,6 @@
 # 刷机
 
-```shell
+```
 # 准备aosp代码包 略
 
 cd aosp
