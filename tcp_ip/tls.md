@@ -1,11 +1,65 @@
-# TLS 协议全面深刻知识大纲
+# SSL/TLS 协议
 
 #### 1. 引言
-   - **什么是 TLS？**
+   - **什么是 SSL/TLS？**
+
+        - 传输层安全性协议（Transport Layer Security，TLS），TLS 是 SSL（Secure Sockets Layer）的继承者和升级版本 ，https=http+tls，多种加密技术和子协议来确保http数据传输的安全性。
+
    - **TLS 的重要性和应用场景**
+
+        - **HTTPS（HyperText Transfer Protocol Secure）**：安全的网页浏览
+
+          **FTPS（File Transfer Protocol Secure）**：安全的文件传输
+
+          **SMTP over TLS（Simple Mail Transfer Protocol Secure）**：安全的电子邮件发送
+
+          **IMAP over TLS（Internet Message Access Protocol Secure）**：安全的电子邮件接收和管理
+
+          **POP3 over TLS（Post Office Protocol 3 Secure）**：安全的电子邮件接收
+
+          **XMPP over TLS（Extensible Messaging and Presence Protocol Secure）**：安全的即时消息传输
+
+          **VPN 协议（如 OpenVPN）**：安全的虚拟专用网络连接
+
+          **RDP over TLS（Remote Desktop Protocol Secure）**：安全的远程桌面访问
+
+          **MQTT over TLS（Message Queuing Telemetry Transport Secure）**：安全的物联网消息传输
+
+          **DNS over TLS（DoT）**：安全的域名解析
+
    - **TLS 与 SSL 的关系和历史演变**
 
+        - ##### **TLS 1.0（1999 年发布）**
+
+             - 基于 SSL 3.0，引入 HMAC（Hash-based Message Authentication Code）以提高数据完整性验证的强度。支持更强的加密算法，如 3DES。
+
+     - **TLS 1.1（2006 年发布）**
+
+       - CBC（Cipher Block Chaining）模式的保护，防止特定的攻击如 BEAST（Browser Exploit Against SSL/TLS），在每个记录中引入显式 IV，增强了对抗重放攻击的能力。
+
+     - **TLS 1.2（2008 年发布）**
+       - 引入了 SHA-256 作为默认的哈希算法，支持新的加密算法，如 AES-GCM（Galois/Counter Mode）增强性能和可扩展性。
+
+     - **TLS 1.3（2018 年发布）**
+       - 握手过程简化，减少了往返时间（RTT），提高了连接速度。
+       - **默认前向保密**：强制使用前向保密的密钥交换算法（如 ECDHE），确保会话密钥即使泄露也不会影响以前的会话。
+       - **移除不安全算法**：移除了许多不安全的加密算法和密码套件，如静态 RSA 和静态 DH 密钥交换。
+       - **改进的加密模式**：引入 AEAD（Authenticated Encryption with Associated Data）模式，如 AES-GCM 和 ChaCha20-Poly1305，提供更高的安全性和性能。
+       - **0-RTT 支持**：支持 0-RTT（Zero Round-Trip Time）握手，可以在某些情况下减少握手时间，提高连接速度。
+
+     
+
 #### 2. 基础知识
+
+- ![image-20240629184557516](../逆向/assets/img/image-20240629184557516.png)
+
+- 从传输层说起 运输层之上面向用户功能提供通信服务，传输层之下的网络层和数据链路层则负责面向硬件的点对点传输，而一般路由器转发数据只工作到网络层数据。
+- 传输层实现的两个主要载体 UDP（用户数据报协议） TCP（传输控制协议） 
+- UDP
+- 
+- TCP
+- 
+
    - **加密基础**
      - 对称加密 vs. 非对称加密
      - 公钥、私钥和证书
